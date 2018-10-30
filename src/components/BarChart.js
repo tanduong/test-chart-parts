@@ -20,55 +20,65 @@ const data = [
 ];
 
 export default class BarChart extends React.Component {
-  chart = null;
-
   constructor(props) {
     super(props);
     this.state = {hoverRowIndex: undefined};
     const isHovered = index => this.state.hoverRowIndex === index;
-
+    console.log({
+      AxisOrientation,
+      Dimension,
+      scene: scene.toString(),
+      data,
+    });
     this.chart = scene(
-      n =>
-        n
-          .scale(
-            linear('y')
-              .domain('data.amount')
-              .range(Dimension.Height)
-              .nice(),
-            band('x', 'xband')
-              .domain('data.category')
-              .range(Dimension.Width)
-              .padding(0.05)
-          )
-          .axes(
-            axis('x', AxisOrientation.Bottom),
-            axis('y', AxisOrientation.Left),
-            axis('x', AxisOrientation.Top),
-            axis('y', AxisOrientation.Right)
-          )
-          .mark(
-            rect()
-              .table('data')
-              .encode({
-                x: ({d, x}) => x(d.category),
-                y: ({d, y}) => y(d.amount),
-                y2: ({y}) => y(0),
-                width: ({xband}) => xband(),
-                fill: ({index}) => (isHovered(index) ? 'firebrick' : 'steelblue'),
-              })
-              .handle({
-                onMouseEnter: ({index}) => {
-                  if (this.state.hoverRowIndex !== index) {
-                    this.setState({hoverRowIndex: index});
-                  }
-                },
-                onMouseLeave: ({index}) => {
-                  if (this.state.hoverRowIndex === index) {
-                    this.setState({hoverRowIndex: undefined});
-                  }
-                },
-              })
-          ),
+      n => {
+        console.log({n});
+        try {
+          return n
+            .scale(
+              linear('y')
+                .domain('data.amount')
+                .range(Dimension.Height)
+                .nice(),
+              band('x', 'xband')
+                .domain('data.category')
+                .range(Dimension.Width)
+                .padding(0.05)
+            )
+            .axes(
+              axis('x', AxisOrientation.Bottom),
+              axis('y', AxisOrientation.Left),
+              axis('x', AxisOrientation.Top),
+              axis('y', AxisOrientation.Right)
+            )
+            .mark(
+              rect()
+                .singleton(false)
+                .table('data')
+                .encode({
+                  x: ({d, x}) => x(d.category),
+                  y: ({d, y}) => y(d.amount),
+                  y2: ({y}) => y(0),
+                  width: ({xband}) => xband(),
+                  fill: ({index}) => (isHovered(index) ? 'firebrick' : 'steelblue'),
+                })
+                .handle({
+                  onMouseEnter: ({index}) => {
+                    if (this.state.hoverRowIndex !== index) {
+                      this.setState({hoverRowIndex: index});
+                    }
+                  },
+                  onMouseLeave: ({index}) => {
+                    if (this.state.hoverRowIndex === index) {
+                      this.setState({hoverRowIndex: undefined});
+                    }
+                  },
+                })
+            );
+        } catch (error) {
+          console.error(error);
+        }
+      },
       {width: 400, height: 200}
     ).build();
   }
