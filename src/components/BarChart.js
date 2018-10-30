@@ -49,6 +49,7 @@ export default class BarChart extends React.Component {
           .mark(
             rect()
               .table('data')
+              .singleton(false)
               .encode({
                 x: ({d, x}) => x(d.category),
                 y: ({d, y}) => y(d.amount),

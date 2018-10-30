@@ -52,6 +52,7 @@ export default class AnotherBarChart extends React.Component {
           )
           .mark(
             area('dataline')
+              .singleton(false)
               .table('data')
               .encode({
                 x: ({d, xband}) => xband(d.date),
@@ -62,6 +63,7 @@ export default class AnotherBarChart extends React.Component {
                 fill: () => 'green',
               }),
             rect('highlight')
+              .singleton(false)
               .table('data')
               .encode({
                 x: ({d, xband}) => xband(d.date),
