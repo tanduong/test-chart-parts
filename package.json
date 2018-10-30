@@ -3,6 +3,12 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@chart-parts/builder": "0.0.21",
+    "@chart-parts/interfaces": "0.0.21",
+    "@chart-parts/orchestrator": "0.0.21",
+    "@chart-parts/react": "^0.0.21",
+    "@chart-parts/react-svg-renderer": "0.0.21",
+    "@chart-parts/scales": "0.0.21",
     "@lingui/react": "^2.7.0",
     "react": "^16.6.0",
     "react-dom": "^16.6.0",
